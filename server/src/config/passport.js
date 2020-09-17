@@ -3,6 +3,22 @@ import 'dotenv/config';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
 
+import User from '../app/Schemas/User';
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+    .then((user) => {
+      done(null, user);
+    })
+    .catch((e) => {
+      done(new Error(`Failed to deserialize an user. Error: ${e}`));
+    });
+});
+
 export default passport.use(
   new GoogleStrategy(
     {
@@ -10,8 +26,22 @@ export default passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/auth/google/redirect',
     },
-    (accessToken, refreshToken, profile, done) => {
-      console.log(profile);
+    async (accessToken, refreshToken, profile, done) => {
+      const currentUser = await User.findOne({
+        googleId: profile.id,
+      });
+
+      if (!currentUser) {
+        const newUser = await User.create({
+          googleId: profile.id,
+          username: profile.displayName,
+          uri: profile.picture,
+        });
+        if (newUser) {
+          done(null, newUser);
+        }
+      }
+      done(null, currentUser);
     }
   )
 );
