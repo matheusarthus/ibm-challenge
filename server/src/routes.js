@@ -48,6 +48,16 @@ routes.get(
   })
 );
 
+routes.get('/auth/facebook', passport.authenticate('facebook'));
+
+routes.get(
+  '/auth/facebook/redirect',
+  passport.authenticate('facebook', {
+    successRedirect: process.env.CLIENT_HOME_PAGE_URL,
+    failureRedirect: '/auth/login/failed',
+  })
+);
+
 routes.get('/auth/linkedin', passport.authenticate('linkedin'));
 
 routes.get(

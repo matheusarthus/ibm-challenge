@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FcGoogle } from 'react-icons/fc';
 import { FiTwitter } from 'react-icons/fi';
-import { FaLinkedinIn } from 'react-icons/fa';
+import { FaLinkedinIn, FaFacebookSquare } from 'react-icons/fa';
 
 import {
   Container,
@@ -11,6 +11,7 @@ import {
   GoogleButton,
   TwitterButton,
   LinkedinButton,
+  FacebookButton,
 } from './styles';
 
 import ilustration from '../../assets/ilustrate.jpg';
@@ -22,6 +23,10 @@ function Login() {
 
   const loginWithTwitter = async () => {
     window.open('http://localhost:3333/auth/twitter', '_self');
+  };
+
+  const loginWithFacebook = async () => {
+    window.open('http://localhost:3333/auth/facebook', '_self');
   };
 
   const loginWithLinkedin = async () => {
@@ -41,10 +46,16 @@ function Login() {
         <FiTwitter color="#fff" />
         <span>Sign in with Twitter</span>
       </TwitterButton>
-      <LinkedinButton type="button" onClick={() => loginWithLinkedin()}>
-        <FaLinkedinIn />
-        <span>Sign in with Linkedin</span>
-      </LinkedinButton>
+      <FacebookButton type="button" onClick={() => loginWithFacebook()}>
+        <FaFacebookSquare color="#fff" />
+        <span>Sign in with Facebook</span>
+      </FacebookButton>
+      {false && (
+        <LinkedinButton type="button" onClick={() => loginWithLinkedin()}>
+          <FaLinkedinIn />
+          <span>Sign in with Linkedin</span>
+        </LinkedinButton>
+      )}
     </Container>
   );
 }

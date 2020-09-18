@@ -31,8 +31,7 @@ export const GoogleButton = styled.button`
   min-width: 200px;
   margin-bottom: 10px;
   background-color: #fff;
-  border-radius: 5px;
-  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border: 3px solid rgba(0, 0, 0);
 
   span {
     margin-left: 10px;
@@ -46,8 +45,22 @@ export const TwitterButton = styled.button`
   min-width: 200px;
   margin-bottom: 10px;
   background-color: #1da1f2;
-  border-radius: 5px;
-  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border: 3px solid rgba(0, 0, 0);
+
+  span {
+    margin-left: 10px;
+    color: #fff;
+  }
+`;
+
+export const FacebookButton = styled.button`
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+  min-width: 200px;
+  margin-bottom: 10px;
+  background-color: #1277b5;
+  border: 3px solid rgba(0, 0, 0);
 
   span {
     margin-left: 10px;
@@ -61,8 +74,7 @@ export const LinkedinButton = styled.button`
   padding: 10px 20px;
   min-width: 200px;
   background-color: #1277b5;
-  border-radius: 5px;
-  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border: 3px solid rgba(0, 0, 0);
 
   span {
     margin-left: 10px;

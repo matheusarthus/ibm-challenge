@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import passport from 'passport';
-import { Strategy as LinkedinStrategy } from 'passport-linkedin-oauth2';
+import { Strategy as FacebookStrategy } from 'passport-facebook';
 
 import User from '../../app/Schemas/User';
 
@@ -20,23 +20,23 @@ passport.deserializeUser((id, done) => {
 });
 
 export default passport.use(
-  new LinkedinStrategy(
+  new FacebookStrategy(
     {
-      clientID: process.env.LINKEDIN_CLIENT_ID,
-      clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
-      callbackURL: '/auth/linkedin/redirect',
-      scope: ['r_liteprofile'],
+      clientID: process.env.FACEBOOK_APP_ID,
+      clientSecret: process.env.FACEBOOK_APP_SECRET,
+      callbackURL: '/auth/facebook/redirect',
+      profileFields: ['id', 'displayName', 'photos', 'email'],
     },
     async (accessToken, refreshToken, profile, done) => {
       const currentUser = await User.findOne({
-        linkedinId: profile.id,
+        facebookId: profile.id,
       });
 
       if (!currentUser) {
         const newUser = await User.create({
-          linkedinId: profile.id,
-          username: profile.name,
-          uri: profile.profile_image_url,
+          facebookId: profile.id,
+          username: profile.displayName,
+          uri: profile.photos[0].value,
         });
         if (newUser) {
           done(null, newUser);
