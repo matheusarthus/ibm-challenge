@@ -3,7 +3,7 @@ import 'dotenv/config';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
 
-import User from '../app/Schemas/User';
+import User from '../../app/Schemas/User';
 
 passport.serializeUser((user, done) => {
   done(null, user.id);

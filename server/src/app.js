@@ -7,7 +7,8 @@ import cookieSession from 'cookie-session';
 import passport from 'passport';
 import routes from './routes';
 
-import './config/passport';
+import './config/passports/google';
+import './config/passports/twitter';
 
 class App {
   constructor() {

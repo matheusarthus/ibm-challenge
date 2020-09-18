@@ -20,20 +20,24 @@ function Login() {
     window.open('http://localhost:3333/auth/google', '_self');
   };
 
+  const loginWithTwitter = async () => {
+    window.open('http://localhost:3333/auth/twitter', '_self');
+  };
+
   return (
     <Container>
       <Ilustration src={ilustration} />
       <Logo>This Error will be fine.</Logo>
 
-      <GoogleButton type="submit" onClick={() => loginWithGoogle()}>
+      <GoogleButton type="button" onClick={() => loginWithGoogle()}>
         <FcGoogle />
         <span>Sign in with Google</span>
       </GoogleButton>
-      <TwitterButton type="submit">
+      <TwitterButton type="button" onClick={() => loginWithTwitter()}>
         <FiTwitter color="#fff" />
         <span>Sign in with Twitter</span>
       </TwitterButton>
-      <LinkedinButton type="submit">
+      <LinkedinButton type="button" onClick={() => {}}>
         <FaLinkedinIn />
         <span>Sign in with Linkedin</span>
       </LinkedinButton>

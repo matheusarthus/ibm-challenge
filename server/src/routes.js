@@ -1,10 +1,11 @@
+import 'dotenv/config';
+
 import { Router } from 'express';
 import passport from 'passport';
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
-const CLIENT_HOME_PAGE_URL = 'http://localhost:3000/';
 
 routes.get('/auth/login/success', (req, res) => {
   if (req.user) {
@@ -32,7 +33,22 @@ routes.get(
 routes.get(
   '/auth/google/redirect',
   passport.authenticate('google', {
-    successRedirect: CLIENT_HOME_PAGE_URL,
+    successRedirect: process.env.CLIENT_HOME_PAGE_URL,
+    failureRedirect: '/auth/login/failed',
+  })
+);
+
+routes.get(
+  '/auth/twitter',
+  passport.authenticate('twitter', {
+    scope: ['profile'],
+  })
+);
+
+routes.get(
+  '/auth/twitter/redirect',
+  passport.authenticate('twitter', {
+    successRedirect: process.env.CLIENT_HOME_PAGE_URL,
     failureRedirect: '/auth/login/failed',
   })
 );
@@ -46,7 +62,7 @@ routes.get('/auth/login/failed', (req, res) => {
 
 routes.get('/auth/logout', (req, res) => {
   req.logout();
-  res.redirect(CLIENT_HOME_PAGE_URL);
+  res.redirect(process.env.CLIENT_HOME_PAGE_URL);
 });
 
 routes.use(authMiddleware);
