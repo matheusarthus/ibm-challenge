@@ -4,6 +4,23 @@ import passport from 'passport';
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
+const CLIENT_HOME_PAGE_URL = 'http://localhost:3000/';
+
+routes.get('/auth/login/success', (req, res) => {
+  if (req.user) {
+    res.json({
+      success: true,
+      message: 'user has successfully authenticated',
+      user: req.user,
+      cookies: req.cookies,
+    });
+  } else {
+    res.json({
+      success: false,
+      message: 'user failed to authenticate.',
+    });
+  }
+});
 
 routes.get(
   '/auth/google',
@@ -15,21 +32,21 @@ routes.get(
 routes.get(
   '/auth/google/redirect',
   passport.authenticate('google', {
-    successRedirect: '/',
+    successRedirect: CLIENT_HOME_PAGE_URL,
     failureRedirect: '/auth/login/failed',
   })
 );
 
-routes.get('/login/failed', (req, res) => {
+routes.get('/auth/login/failed', (req, res) => {
   res.status(401).json({
     success: false,
     message: 'user failed to authenticate.',
   });
 });
 
-routes.get('/logout', (req, res) => {
+routes.get('/auth/logout', (req, res) => {
   req.logout();
-  res.redirect('/');
+  res.redirect(CLIENT_HOME_PAGE_URL);
 });
 
 routes.use(authMiddleware);
