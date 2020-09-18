@@ -4,7 +4,7 @@ import passport from 'passport';
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
-const CLIENT_HOME_PAGE_URL = 'http://localhost:3000/login';
+const CLIENT_HOME_PAGE_URL = 'http://localhost:3000/';
 
 routes.get('/auth/login/success', (req, res) => {
   if (req.user) {

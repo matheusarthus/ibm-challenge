@@ -1,28 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // import { Container } from './styles';
 
-import history from '../../services/history';
+import Login from '../../components/Login';
+import Dashboard from '../../components/Dashboard';
+
+import api from '../../services/api';
 
 function Main() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
-    console.log('main');
+    async function autoLogin() {
+      try {
+        const response = await api.get('auth/login/success', {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Credentials': true,
+          },
+        });
+
+        if (response.data.success) {
+          setAuthenticated(true);
+          setUser(response.data.user);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    autoLogin();
   }, []);
 
-  const logOut = () => {
-    window.open('http://localhost:3333/auth/logout', '_self');
-  };
-
-  return (
-    <div>
-      <h1>MAIN</h1>
-      <div>
-        <button type="button" onClick={() => logOut()}>
-          Logout
-        </button>
-      </div>
-    </div>
-  );
+  return authenticated ? <Dashboard /> : <Login />;
 }
 
 export default Main;
