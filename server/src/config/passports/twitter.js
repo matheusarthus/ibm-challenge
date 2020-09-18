@@ -34,8 +34,8 @@ export default passport.use(
       if (!currentUser) {
         const newUser = await User.create({
           twitterId: profile.id,
-          username: profile.name,
-          uri: profile.profile_image_url,
+          username: profile.displayName,
+          uri: profile.photos[0].value,
         });
         if (newUser) {
           done(null, newUser);

@@ -28,7 +28,7 @@ export const GoogleButton = styled.button`
   display: flex;
   justify-content: center;
   padding: 10px 20px;
-  min-width: 200px;
+  min-width: 220px;
   margin-bottom: 10px;
   background-color: #fff;
   border: 3px solid rgba(0, 0, 0);
@@ -42,7 +42,7 @@ export const TwitterButton = styled.button`
   display: flex;
   justify-content: center;
   padding: 10px 20px;
-  min-width: 200px;
+  min-width: 220px;
   margin-bottom: 10px;
   background-color: #1da1f2;
   border: 3px solid rgba(0, 0, 0);
@@ -57,7 +57,7 @@ export const FacebookButton = styled.button`
   display: flex;
   justify-content: center;
   padding: 10px 20px;
-  min-width: 200px;
+  min-width: 220px;
   margin-bottom: 10px;
   background-color: #1277b5;
   border: 3px solid rgba(0, 0, 0);
