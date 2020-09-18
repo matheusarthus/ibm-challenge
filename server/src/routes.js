@@ -38,16 +38,21 @@ routes.get(
   })
 );
 
-routes.get(
-  '/auth/twitter',
-  passport.authenticate('twitter', {
-    scope: ['profile'],
-  })
-);
+routes.get('/auth/twitter', passport.authenticate('twitter'));
 
 routes.get(
   '/auth/twitter/redirect',
   passport.authenticate('twitter', {
+    successRedirect: process.env.CLIENT_HOME_PAGE_URL,
+    failureRedirect: '/auth/login/failed',
+  })
+);
+
+routes.get('/auth/linkedin', passport.authenticate('linkedin'));
+
+routes.get(
+  '/auth/linkedin/redirect',
+  passport.authenticate('linkedin', {
     successRedirect: process.env.CLIENT_HOME_PAGE_URL,
     failureRedirect: '/auth/login/failed',
   })

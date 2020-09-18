@@ -24,6 +24,10 @@ function Login() {
     window.open('http://localhost:3333/auth/twitter', '_self');
   };
 
+  const loginWithLinkedin = async () => {
+    window.open('http://localhost:3333/auth/linkedin', '_self');
+  };
+
   return (
     <Container>
       <Ilustration src={ilustration} />
@@ -37,7 +41,7 @@ function Login() {
         <FiTwitter color="#fff" />
         <span>Sign in with Twitter</span>
       </TwitterButton>
-      <LinkedinButton type="button" onClick={() => {}}>
+      <LinkedinButton type="button" onClick={() => loginWithLinkedin()}>
         <FaLinkedinIn />
         <span>Sign in with Linkedin</span>
       </LinkedinButton>

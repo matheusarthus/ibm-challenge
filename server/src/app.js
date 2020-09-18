@@ -9,6 +9,7 @@ import routes from './routes';
 
 import './config/passports/google';
 import './config/passports/twitter';
+import './config/passports/linkedin';
 
 class App {
   constructor() {
