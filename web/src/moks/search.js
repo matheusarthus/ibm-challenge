@@ -1,4 +1,4 @@
-export const items = [
+export const searchMok = [
   {
     tags: ['ag-grid', 'ag-grid-react'],
     owner: {
@@ -13,6 +13,8 @@ export const items = [
     is_answered: false,
     view_count: 12,
     answer_count: 1,
+    body:
+      "<p>I'm setting up basic authentication on a php site and found <a href='http://php.net/manual/en/features.http-auth.php'>this</a> page on the php manual showing the set up.  What does 'realm' mean here in the header? </p><pre><code>header('WWW-Authenticate: Basic realm=My Realm');</code></pre><p>Is it the page page being requested?</p>",
     score: 0,
     last_activity_date: 1600486025,
     creation_date: 1600467752,

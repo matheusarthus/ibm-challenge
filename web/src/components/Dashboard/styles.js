@@ -9,8 +9,6 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap');
-
   display: flex;
   min-height: 30px;
   justify-content: space-between;
@@ -117,8 +115,6 @@ export const Form = styled.div`
 `;
 
 export const QuestionsContainer = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap');
-
   display: flex;
   justify-content: center;
   align-content: center;
@@ -162,25 +158,20 @@ export const QuestionsContainer = styled.div`
   }
 `;
 
-export const Question = styled.div`
+export const AnswersContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
   border-width: 3px;
   border-style: solid;
+  align-self: center;
   border-color: ${(props) => (props.hasAnswer ? '#004e00' : '#000')};
   width: 60%;
   padding: 10px;
   margin-bottom: 10px;
-  cursor: pointer;
 
   @media (max-width: 720px) {
     width: 90%;
-  }
-
-  &:hover {
-    background: ${(props) => (props.hasAnswer ? '#008900' : '#888')};
-    color: #fff;
   }
 
   h4 {
@@ -216,7 +207,7 @@ export const Question = styled.div`
 
   div.tags {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 
     @media (max-width: 500px) {
       flex-direction: column;
@@ -233,8 +224,80 @@ export const Question = styled.div`
       padding: 3px;
     }
   }
+
+  div.dates {
+    margin-bottom: 10px;
+  }
+
+  div#body {
+    display: flex;
+    flex-direction: column;
+    background-color: #ddd;
+    padding: 0 10px;
+    margin-bottom: 10px;
+
+    p {
+      text-justify: distribute-all-lines;
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+
+    code {
+      display: block;
+      white-space: pre-wrap;
+      color: #00f;
+      background-color: #f1f1f1;
+      padding: 4px;
+      font-size: 105%;
+    }
+  }
 `;
 
-export const AnswersContainer = styled.div``;
+export const Answer = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-width: 3px;
+  border-style: solid;
+  align-self: center;
+  border-color: ${(props) => (props.hasAnswer ? '#004e00' : '#000')};
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
 
-export const Answers = styled.div``;
+  div#answerBody {
+    display: flex;
+    flex-direction: column;
+    padding: 0 5px;
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin-bottom: 3px;
+      margin-top: 10px;
+    }
+
+    blockquote {
+      text-indent: 20px;
+      border-left-width: 2px;
+      border-left-style: solid;
+      margin-top: 10px;
+    }
+
+    ol {
+      padding: 20px;
+    }
+
+    p {
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+
+    code {
+      white-space: pre-wrap;
+      color: #00f;
+      background-color: #f1f1f1;
+    }
+  }
+`;
