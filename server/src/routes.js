@@ -5,6 +5,8 @@ import passport from 'passport';
 
 import authMiddleware from './app/middlewares/auth';
 
+import SaveQuestionsController from './app/controllers/SaveQuestionsController';
+
 const routes = new Router();
 
 routes.get('/auth/login/success', (req, res) => {
@@ -90,5 +92,7 @@ routes.get('/', (req, res) => {
     cookies: req.cookies,
   });
 });
+
+routes.post('/save/:id', SaveQuestionsController.store);
 
 export default routes;

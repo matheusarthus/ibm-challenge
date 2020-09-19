@@ -3,7 +3,7 @@ import 'dotenv/config';
 import passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 
-import User from '../../app/Schemas/User';
+import User from '../../app/Models/User';
 
 passport.serializeUser((user, done) => {
   done(null, user.id);

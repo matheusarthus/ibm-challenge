@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { format } from 'date-fns';
 
@@ -8,12 +9,41 @@ import { Container } from './styles';
 
 import Answer from './Answer';
 
+import api from '../../../services/api';
+
 function AnswersContainer({
+  user,
   selectedQuestion,
   setSelectedQuestion,
   answers,
   setAnswers,
 }) {
+  async function saveQuestion() {
+    const id = user.facebookId || user.googleId || user.twitterId;
+
+    try {
+      const response = await api.post(
+        `save/${id}`,
+        {
+          question: selectedQuestion,
+          answers,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Credentials': true,
+          },
+        }
+      );
+
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <Container>
       <div id="header">
@@ -46,8 +76,7 @@ function AnswersContainer({
             id="save"
             type="button"
             onClick={() => {
-              console.log(selectedQuestion);
-              console.log(answers);
+              saveQuestion();
             }}
           >
             salvar

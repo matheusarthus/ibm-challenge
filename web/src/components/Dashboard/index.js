@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -109,6 +110,7 @@ function Dashboard({ user }) {
 
         {selectedQuestion ? (
           <AnswersContainer
+            user={user}
             selectedQuestion={selectedQuestion}
             setSelectedQuestion={setSelectedQuestion}
             answers={answers}

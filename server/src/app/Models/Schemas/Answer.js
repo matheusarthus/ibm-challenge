@@ -8,4 +8,4 @@ const AnswerSchema = new mongoose.Schema({
   body: String,
 });
 
-export default mongoose.model('Answer', AnswerSchema);
+export default AnswerSchema;
