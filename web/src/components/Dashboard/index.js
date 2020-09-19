@@ -6,9 +6,7 @@ import parse from 'html-react-parser';
 
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import { BsStarFill } from 'react-icons/bs';
-
-import { searchMok } from '../../moks/search';
-import { answersMok } from '../../moks/answers';
+import { CgCloseO } from 'react-icons/cg';
 
 import {
   Container,
@@ -56,6 +54,9 @@ function Dashboard({ user }) {
           }
         );
 
+        setSelectedQuestion(null);
+        setAnswers(null);
+
         setQuestions(response.data.items);
         setHasMoreQuestion(response.data.has_more);
 
@@ -70,46 +71,9 @@ function Dashboard({ user }) {
     }
   };
 
-  const searchAnswersQuestion = async () => {
-    /*     if (search.length > 0) {
-      try {
-        const response = await axios.get(
-          `https://api.stackexchange.com/2.2/search`,
-          {
-            params: {
-              page,
-              pagesize: 10,
-              order: 'desc',
-              sort: 'relevance',
-              intitle: search,
-              site: 'stackoverflow',
-              filter: '!9_bDDxJY5',
-              key: 'djDoiXwMGc7fHjosrpUb1A((',
-            },
-          }
-        );
-
-        setQuestions(response.data.items);
-        setHasMoreQuestion(response.data.has_more);
-
-        if (response.data.items.length === 0) {
-          setNoAnsers(true);
-        } else {
-          setNoAnsers(false);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    } */
-  };
-
   useEffect(() => {
     searchQuestions();
   }, [page]);
-
-  useEffect(() => {
-    searchAnswersQuestion();
-  }, []);
 
   return (
     <>
@@ -165,7 +129,7 @@ function Dashboard({ user }) {
           <QuestionsContainer>
             {noAnswers && (
               <div id="noAnswers">
-                <strong>No answers for this ERROR...</strong>
+                <strong>No help for this ERROR...</strong>
                 <img src={thisIsFine} alt="dog in burning room" />
               </div>
             )}
@@ -202,30 +166,45 @@ function Dashboard({ user }) {
                   key={question.question_id}
                   question={question}
                   setSelectedQuestion={setSelectedQuestion}
+                  setAnswers={setAnswers}
                 />
               ))}
           </QuestionsContainer>
         )}
-        {!selectedQuestion && (
+        {selectedQuestion && (
           <AnswersContainer>
-            <h4>{searchMok[0].title}</h4>
+            <div id="header">
+              <div id="titles">
+                <h4>{selectedQuestion.title}</h4>
+                <a href={selectedQuestion.link}>see on stackoverflow</a>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedQuestion(null);
+                  setAnswers([]);
+                }}
+              >
+                <CgCloseO color="#f00" size={42} />
+              </button>
+            </div>
             <div>
               <div id="metrics">
                 <strong>Respostas:</strong>
-                <span>{searchMok[0].answer_count}</span>
+                <span>{selectedQuestion.answer_count}</span>
               </div>
               <div id="metrics">
                 <strong>Votos:</strong>
-                <span>{searchMok[0].score}</span>
+                <span>{selectedQuestion.score}</span>
               </div>
               <div id="metrics">
                 <strong>Visitas:</strong>
-                <span>{searchMok[0].view_count}</span>
+                <span>{selectedQuestion.view_count}</span>
               </div>
             </div>
             <div className="tags">
-              {searchMok[0].tags &&
-                searchMok[0].tags.map((tag) => (
+              {selectedQuestion.tags &&
+                selectedQuestion.tags.map((tag) => (
                   <div id="tag" key={tag}>
                     <span>{tag}</span>
                   </div>
@@ -235,22 +214,22 @@ function Dashboard({ user }) {
               <strong>Criação:</strong>
               <span>
                 {format(
-                  new Date(searchMok[0].creation_date * 1000),
+                  new Date(selectedQuestion.creation_date * 1000),
                   'dd/MM/yyyy - HH:mm:ss'
                 )}
               </span>
               <strong>Atualização:</strong>
               <span>
                 {format(
-                  new Date(searchMok[0].last_activity_date * 1000),
+                  new Date(selectedQuestion.last_activity_date * 1000),
                   'dd/MM/yyyy - HH:mm:ss'
                 )}
               </span>
             </div>
-            <div id="body">{parse(searchMok[0].body)}</div>
+            <div id="body">{parse(selectedQuestion.body)}</div>
             <h4>Answers:</h4>
-            {answersMok &&
-              answersMok.map((answer) => (
+            {answers.length > 0 ? (
+              answers.map((answer) => (
                 <Answer key={answer.answer_id} accepted={answer.is_accepted}>
                   <div id="owner">
                     <img src={answer.owner.profile_image} alt="profile" />
@@ -264,7 +243,10 @@ function Dashboard({ user }) {
                   </div>
                   <div id="answerBody">{parse(answer.body)}</div>
                 </Answer>
-              ))}
+              ))
+            ) : (
+              <span id="noAnswers">no answers for this question...</span>
+            )}
           </AnswersContainer>
         )}
       </Container>

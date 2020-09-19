@@ -170,6 +170,31 @@ export const AnswersContainer = styled.div`
   padding: 10px;
   margin-bottom: 10px;
 
+  span#noAnswers {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-self: center;
+    font-family: 'Grandstander', cursive;
+  }
+
+  div#header {
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: 500px) {
+      flex-direction: row;
+    }
+
+    div#titles {
+      flex-direction: column;
+    }
+
+    button {
+      background: none;
+      border: none;
+    }
+  }
+
   @media (max-width: 720px) {
     width: 90%;
   }
@@ -177,6 +202,10 @@ export const AnswersContainer = styled.div`
   h4 {
     font-size: 16px;
     font-weight: bold;
+  }
+
+  a {
+    font-size: 12px;
   }
 
   div {
@@ -233,22 +262,53 @@ export const AnswersContainer = styled.div`
     display: flex;
     flex-direction: column;
     background-color: #ddd;
-    padding: 0 10px;
+    padding: 10px;
     margin-bottom: 10px;
 
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    pre {
+      display: flex;
+      flex-direction: column;
+    }
+
+    img {
+      width: 95%;
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin-bottom: 3px;
+      margin-top: 10px;
+    }
+
+    blockquote {
+      text-indent: 20px;
+      border-left-width: 2px;
+      border-left-style: solid;
+      margin-top: 10px;
+    }
+
+    ol {
+      padding: 20px;
+    }
+
     p {
-      text-justify: distribute-all-lines;
       margin-top: 1em;
       margin-bottom: 1em;
     }
 
     code {
-      display: block;
       white-space: pre-wrap;
       color: #00f;
       background-color: #f1f1f1;
-      padding: 4px;
-      font-size: 105%;
     }
   }
 `;
@@ -303,6 +363,22 @@ export const Answer = styled.div`
     flex-direction: column;
     padding: 0 5px;
 
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    pre {
+      display: flex;
+      flex-direction: column;
+    }
+
+    img {
+      width: 95%;
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+
     h1,
     h2,
     h3,
@@ -331,6 +407,10 @@ export const Answer = styled.div`
       white-space: pre-wrap;
       color: #00f;
       background-color: #f1f1f1;
+
+      @media (max-width: 500px) {
+        font-size: 80%;
+      }
     }
   }
 `;

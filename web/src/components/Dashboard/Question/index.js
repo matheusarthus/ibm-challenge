@@ -1,14 +1,45 @@
 import React from 'react';
 import { format } from 'date-fns';
 
+import axios from 'axios';
 import { Container } from './styles';
 
-function Question({ question, setSelectedQuestion }) {
+function Question({ question, setSelectedQuestion, setAnswers }) {
+  const searchAnswersQuestion = async (questionId) => {
+    try {
+      const response = await axios.get(
+        `https://api.stackexchange.com/2.2/questions/${questionId}/answers`,
+        {
+          params: {
+            pagesize: 10,
+            order: 'desc',
+            sort: 'votes',
+            site: 'stackoverflow',
+            filter: '!9_bDE(fI5',
+            key: 'djDoiXwMGc7fHjosrpUb1A((',
+          },
+        }
+      );
+
+      console.log(response.data);
+
+      setAnswers(response.data.items);
+      setSelectedQuestion(question);
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Container
       hasAnswer={question.is_answered}
       onClick={() => {
-        setSelectedQuestion(question);
+        searchAnswersQuestion(question.question_id);
       }}
     >
       <h4>{question.title}</h4>
