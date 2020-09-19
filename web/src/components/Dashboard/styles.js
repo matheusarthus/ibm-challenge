@@ -116,7 +116,7 @@ export const Form = styled.div`
   }
 `;
 
-export const AnswersContainer = styled.div`
+export const QuestionsContainer = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap');
 
   display: flex;
@@ -162,7 +162,7 @@ export const AnswersContainer = styled.div`
   }
 `;
 
-export const Answer = styled.div`
+export const Question = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -234,3 +234,7 @@ export const Answer = styled.div`
     }
   }
 `;
+
+export const AnswersContainer = styled.div``;
+
+export const Answers = styled.div``;

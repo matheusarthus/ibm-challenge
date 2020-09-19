@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
 import axios from 'axios';
+
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
+
 import {
   Container,
   Header,
   Form,
   Logo,
+  QuestionsContainer,
   AnswersContainer,
-  Answer,
+  Answers,
 } from './styles';
+
+import Question from './Question';
 
 import thisIsFine from '../../assets/this_is_fine.jpg';
 
 function Dashboard({ user }) {
   const [question, setQuestion] = useState('');
-  const [answers, setAnswers] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const [hasMoreQuestions, setHasMoreQuestion] = useState(true);
   const [noAnswers, setNoAnsers] = useState(false);
   const [page, setPage] = useState(1);
@@ -37,12 +41,13 @@ function Dashboard({ user }) {
               sort: 'relevance',
               intitle: question,
               site: 'stackoverflow',
+              filter: '!9_bDDxJY5',
               key: 'djDoiXwMGc7fHjosrpUb1A((',
             },
           }
         );
 
-        setAnswers(response.data.items);
+        setQuestions(response.data.items);
         setHasMoreQuestion(response.data.has_more);
 
         if (response.data.items.length === 0) {
@@ -50,7 +55,6 @@ function Dashboard({ user }) {
         } else {
           setNoAnsers(false);
         }
-        console.log(response.data);
       } catch (err) {
         console.log(err);
       }
@@ -72,7 +76,7 @@ function Dashboard({ user }) {
             id="errors"
             type="button"
             onClick={() => {
-              console.log(answers);
+              console.log(questions);
             }}
           >
             my Errors
@@ -109,14 +113,14 @@ function Dashboard({ user }) {
           </div>
         </Form>
 
-        <AnswersContainer>
+        <QuestionsContainer>
           {noAnswers && (
             <div id="noAnswers">
               <strong>No answers for this ERROR...</strong>
               <img src={thisIsFine} alt="dog in burning room" />
             </div>
           )}
-          {answers.length > 0 && (
+          {questions.length > 0 && (
             <div id="containerPagination">
               {page !== 1 && (
                 <button
@@ -143,57 +147,9 @@ function Dashboard({ user }) {
               )}
             </div>
           )}
-          {answers &&
-            answers.map((answer) => (
-              <Answer
-                hasAnswer={answer.is_answered}
-                key={answer.question_id}
-                onClick={() => {
-                  console.log(answer.question_id);
-                }}
-              >
-                <h4>{answer.title}</h4>
-                <div>
-                  <div id="metrics">
-                    <strong>Respostas:</strong>
-                    <span>{answer.answer_count}</span>
-                  </div>
-                  <div id="metrics">
-                    <strong>Votos:</strong>
-                    <span>{answer.score}</span>
-                  </div>
-                  <div id="metrics">
-                    <strong>Visitas:</strong>
-                    <span>{answer.view_count}</span>
-                  </div>
-                </div>
-                <div className="tags">
-                  {answer.tags &&
-                    answer.tags.map((tag) => (
-                      <div id="tag" key={tag}>
-                        <span>{tag}</span>
-                      </div>
-                    ))}
-                </div>
-                <div className="dates">
-                  <strong>Criação:</strong>
-                  <span>
-                    {format(
-                      new Date(answer.creation_date * 1000),
-                      'dd/MM/yyyy - HH:mm:ss'
-                    )}
-                  </span>
-                  <strong>Atualização:</strong>
-                  <span>
-                    {format(
-                      new Date(answer.last_activity_date * 1000),
-                      'dd/MM/yyyy - HH:mm:ss'
-                    )}
-                  </span>
-                </div>
-              </Answer>
-            ))}
-        </AnswersContainer>
+          {questions && questions.map((answer) => <Question answer={answer} />)}
+        </QuestionsContainer>
+        <AnswersContainer />
       </Container>
     </>
   );
