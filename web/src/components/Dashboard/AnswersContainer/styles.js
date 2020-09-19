@@ -29,11 +29,87 @@ export const Container = styled.div`
 
     div#titles {
       flex-direction: column;
+
+      div#owner {
+        display: flex;
+        justify-content: flex-start;
+        align-content: center;
+        align-items: center;
+
+        @media (max-width: 500px) {
+          flex-direction: row;
+        }
+
+        img {
+          width: 42px;
+          height: 42px;
+          margin-right: 10px;
+        }
+
+        div {
+          display: flex;
+          flex-direction: column;
+          align-content: center;
+          align-items: center;
+      }
+
+    div#reputation {
+      display: flex;
+      align-content: center;
+      align-items: center;
+      flex-direction: row;
+
+      span {
+        margin-left: 5px;
+        font-size: 12px;
+      }
+    }
+  }
     }
 
-    button {
-      background: none;
-      border: none;
+    div#buttons {
+      display: flex;
+      flex-direction: column;
+
+      button#back {
+        padding: 5px 10px;
+        background-color: #fff;
+        border: 3px solid rgba(0, 0, 0);
+        color: #222;
+        font-weight: bold;
+        margin-left: 10px;
+        width: 90px;
+        margin-bottom: 5px;
+
+        &:hover {
+          background: #f00;
+          color: #fff;
+        }
+
+        @media (max-width: 500px) {
+          font-size: 12px;
+        }
+      }
+    }
+
+    button#save {
+        padding: 5px 10px;
+        background-color: #fff;
+        border: 3px solid rgba(0, 0, 0);
+        color: #222;
+        font-weight: bold;
+        margin-left: 10px;
+        width: 90px;
+
+        &:hover {
+          background: #008900;
+          color: #fff;
+        }
+
+        @media (max-width: 500px) {
+          font-size: 12px;
+        }
+      }
     }
   }
 

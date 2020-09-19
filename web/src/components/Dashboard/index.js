@@ -71,8 +71,6 @@ function Dashboard({ user }) {
             type="button"
             onClick={() => {
               console.log(questions);
-              console.log(selectedQuestion);
-              console.log(selectedQuestion.length);
             }}
           >
             my Errors

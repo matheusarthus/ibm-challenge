@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 
 import parse from 'html-react-parser';
 
-import { CgCloseO } from 'react-icons/cg';
+import { BsStarFill } from 'react-icons/bs';
 import { Container } from './styles';
 
 import Answer from './Answer';
@@ -20,16 +20,39 @@ function AnswersContainer({
         <div id="titles">
           <h4>{selectedQuestion.title}</h4>
           <a href={selectedQuestion.link}>see on stackoverflow</a>
+          <div id="owner">
+            <img src={selectedQuestion.owner.profile_image} alt="profile" />
+            <div>
+              <strong>{selectedQuestion.owner.display_name}</strong>
+              <div id="reputation">
+                <BsStarFill color="#ffbf00" />
+                <span>{selectedQuestion.owner.reputation}</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            setSelectedQuestion(null);
-            setAnswers([]);
-          }}
-        >
-          <CgCloseO color="#f00" size={42} />
-        </button>
+        <div id="buttons">
+          <button
+            id="back"
+            type="button"
+            onClick={() => {
+              setSelectedQuestion(null);
+              setAnswers([]);
+            }}
+          >
+            Voltar
+          </button>
+          <button
+            id="save"
+            type="button"
+            onClick={() => {
+              console.log(selectedQuestion);
+              console.log(answers);
+            }}
+          >
+            salvar
+          </button>
+        </div>
       </div>
       <div>
         <div id="metrics">
@@ -72,7 +95,9 @@ function AnswersContainer({
       <div id="body">{parse(selectedQuestion.body)}</div>
       <h4>Answers:</h4>
       {answers.length > 0 ? (
-        answers.map((answer) => <Answer answer={answer} />)
+        answers.map((answer) => (
+          <Answer answer={answer} key={answer.answer_id} />
+        ))
       ) : (
         <span id="noAnswers">no answers for this question...</span>
       )}

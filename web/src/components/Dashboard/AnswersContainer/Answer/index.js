@@ -6,7 +6,7 @@ import { Container } from './styles';
 
 function Answer({ answer }) {
   return (
-    <Container key={answer.answer_id} accepted={answer.is_accepted}>
+    <Container accepted={answer.is_accepted}>
       <div id="owner">
         <img src={answer.owner.profile_image} alt="profile" />
         <div>
