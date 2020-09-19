@@ -1,11 +1,9 @@
 import mongoose from 'mongoose';
 
-const AnswerSchema = new mongoose.Schema({
-  is_accepted: Boolean,
+const OwnerSchema = new mongoose.Schema({
   profile_image: String,
   display_name: String,
   reputation: Number,
-  body: String,
 });
 
-export default AnswerSchema;
+export default OwnerSchema;
