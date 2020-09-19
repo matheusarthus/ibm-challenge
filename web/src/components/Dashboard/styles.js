@@ -47,9 +47,9 @@ export const Header = styled.div`
 
     button#errors {
       padding: 5px 10px;
-      background-color: #f00;
+      background-color: #ffbf00;
       border: 3px solid rgba(255, 255, 255);
-      color: #fff;
+      color: #000;
       font-weight: bold;
 
       @media (max-width: 500px) {
@@ -117,18 +117,58 @@ export const Form = styled.div`
 `;
 
 export const AnswersContainer = styled.div`
+  @import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap');
+
   display: flex;
   justify-content: center;
   align-content: center;
   align-items: center;
   flex-direction: column;
+
+  div#noAnswers {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+
+    strong {
+      font-family: 'Grandstander', cursive;
+      margin-bottom: 20px;
+    }
+
+    img {
+      max-width: 180px;
+      max-height: 180px;
+      border: 3px solid rgba(0, 0, 0);
+    }
+  }
+
+  div#containerPagination {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+
+    span {
+      margin-left: 5px;
+      margin-right: 5px;
+      font-size: 16px;
+    }
+
+    button.pagination {
+      background: none;
+      border: none;
+    }
+  }
 `;
 
 export const Answer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  border: 3px solid rgba(0, 0, 0);
+  border-width: 3px;
+  border-style: solid;
+  border-color: ${(props) => (props.hasAnswer ? '#004e00' : '#000')};
   width: 60%;
   padding: 10px;
   margin-bottom: 10px;
@@ -139,7 +179,7 @@ export const Answer = styled.div`
   }
 
   &:hover {
-    background: #888;
+    background: ${(props) => (props.hasAnswer ? '#008900' : '#888')};
     color: #fff;
   }
 
@@ -176,6 +216,7 @@ export const Answer = styled.div`
 
   div.tags {
     display: flex;
+    margin-bottom: 10px;
 
     @media (max-width: 500px) {
       flex-direction: column;
@@ -188,7 +229,6 @@ export const Answer = styled.div`
       align-items: center;
       background-color: #1da1f2;
       margin-right: 5px;
-      margin-bottom: 10px;
       color: #fff;
       padding: 3px;
     }

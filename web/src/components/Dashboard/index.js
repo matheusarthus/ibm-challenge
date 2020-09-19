@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { toDate, format } from 'date-fns';
+import React, { useState, useEffect } from 'react';
+import { format } from 'date-fns';
 import axios from 'axios';
+import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import {
   Container,
   Header,
@@ -10,26 +11,55 @@ import {
   Answer,
 } from './styles';
 
+import thisIsFine from '../../assets/this_is_fine.jpg';
+
 function Dashboard({ user }) {
   const [question, setQuestion] = useState('');
   const [answers, setAnswers] = useState([]);
+  const [hasMoreQuestions, setHasMoreQuestion] = useState(true);
+  const [noAnswers, setNoAnsers] = useState(false);
+  const [page, setPage] = useState(1);
 
   const logOut = () => {
-    // window.open('http://localhost:3333/auth/logout', '_self');
-    console.log(answers);
+    window.open('http://localhost:3333/auth/logout', '_self');
   };
 
   const searchQuestion = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=${question}&site=stackoverflow`
-      );
+    if (question.length > 0) {
+      try {
+        const response = await axios.get(
+          `https://api.stackexchange.com/2.2/search`,
+          {
+            params: {
+              page,
+              pagesize: 10,
+              order: 'desc',
+              sort: 'relevance',
+              intitle: question,
+              site: 'stackoverflow',
+              key: 'djDoiXwMGc7fHjosrpUb1A((',
+            },
+          }
+        );
 
-      setAnswers(response.data.items);
-    } catch (err) {
-      console.log(err);
+        setAnswers(response.data.items);
+        setHasMoreQuestion(response.data.has_more);
+
+        if (response.data.items.length === 0) {
+          setNoAnsers(true);
+        } else {
+          setNoAnsers(false);
+        }
+        console.log(response.data);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
+
+  useEffect(() => {
+    searchQuestion();
+  }, [page]);
 
   return (
     <>
@@ -42,7 +72,7 @@ function Dashboard({ user }) {
             id="errors"
             type="button"
             onClick={() => {
-              logOut();
+              console.log(answers);
             }}
           >
             my Errors
@@ -70,6 +100,7 @@ function Dashboard({ user }) {
             <button
               type="button"
               onClick={() => {
+                setPage(1);
                 searchQuestion();
               }}
             >
@@ -77,13 +108,48 @@ function Dashboard({ user }) {
             </button>
           </div>
         </Form>
+
         <AnswersContainer>
+          {noAnswers && (
+            <div id="noAnswers">
+              <strong>No answers for this ERROR...</strong>
+              <img src={thisIsFine} alt="dog in burning room" />
+            </div>
+          )}
+          {answers.length > 0 && (
+            <div id="containerPagination">
+              {page !== 1 && (
+                <button
+                  className="pagination"
+                  type="button"
+                  onClick={() => {
+                    setPage(page - 1);
+                  }}
+                >
+                  <BiLeftArrow size={32} />
+                </button>
+              )}
+              <span id="page">{page}</span>
+              {hasMoreQuestions && (
+                <button
+                  className="pagination"
+                  type="button"
+                  onClick={() => {
+                    setPage(page + 1);
+                  }}
+                >
+                  <BiRightArrow size={32} />
+                </button>
+              )}
+            </div>
+          )}
           {answers &&
             answers.map((answer) => (
               <Answer
+                hasAnswer={answer.is_answered}
                 key={answer.question_id}
                 onClick={() => {
-                  console.log('teste');
+                  console.log(answer.question_id);
                 }}
               >
                 <h4>{answer.title}</h4>
