@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Container, Header, Form, Logo } from './styles';
 
-function Dashboard() {
+function Dashboard({ user }) {
+  const [question, setQuestion] = useState('');
+
   const logOut = () => {
-    window.open('http://localhost:3333/auth/logout', '_self');
+    // window.open('http://localhost:3333/auth/logout', '_self');
+    console.log(question);
   };
 
   return (
-    <Container>
+    <>
       <Header>
         <div>
           <Logo>This Error will be fine.</Logo>
@@ -24,8 +27,19 @@ function Dashboard() {
           </button>
         </div>
       </Header>
-      <Form />
-    </Container>
+      <Container>
+        <Form>
+          <h2>{`Hello, ${user && user.username.split(' ')[0]}.`}</h2>
+          <input
+            placeholder="What is your ERROR?"
+            onChange={(item) => {
+              setQuestion(item.target.value);
+            }}
+          />
+          <button type="button">GO!</button>
+        </Form>
+      </Container>
+    </>
   );
 }
 

@@ -35,7 +35,7 @@ function Main() {
     autoLogin();
   }, []);
 
-  return authenticated ? <Dashboard /> : <Login />;
+  return authenticated ? <Dashboard user={user} /> : <Login />;
 }
 
 export default Main;

@@ -9,10 +9,13 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.div`
+  @import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap');
+
   display: flex;
   min-height: 30px;
   justify-content: space-between;
   align-items: center;
+  align-content: center;
   background-color: #222;
   padding: 10px;
 
@@ -32,4 +35,32 @@ export const Logo = styled.span`
   color: #fff;
 `;
 
-export const Form = styled.form``;
+export const Form = styled.div`
+  display: flex;
+  min-height: 200px;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+
+  input {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    min-width: 280px;
+    border: 3px solid rgba(0, 0, 0);
+    padding: 5px 10px;
+
+    ::placeholder {
+      font-size: 16px;
+      text-align: center;
+    }
+  }
+
+  button {
+    padding: 5px 10px;
+    background-color: #aaa;
+    border: 3px solid rgba(0, 0, 0);
+    color: #222222;
+    font-weight: bold;
+  }
+`;
