@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns';
 
 import parse from 'html-react-parser';
 
 import { BsStarFill } from 'react-icons/bs';
+import { MdBackup } from 'react-icons/md';
 import { Container } from './styles';
 
 import Answer from './Answer';
@@ -17,16 +18,18 @@ function AnswersContainer({
   setSelectedQuestion,
   answers,
   setAnswers,
+  areMyErrors,
 }) {
+  const [saved, setSaved] = useState(areMyErrors);
+
   async function saveQuestion() {
     const id = user.facebookId || user.googleId || user.twitterId;
 
     try {
-      const response = await api.post(
-        `save/${id}`,
+      await api.post(
+        `questions/${id}`,
         {
           question: selectedQuestion,
-          answers,
         },
         {
           withCredentials: true,
@@ -38,7 +41,7 @@ function AnswersContainer({
         }
       );
 
-      console.log(response.data);
+      setSaved(true);
     } catch (err) {
       console.log(err);
     }
@@ -72,15 +75,19 @@ function AnswersContainer({
           >
             Voltar
           </button>
-          <button
-            id="save"
-            type="button"
-            onClick={() => {
-              saveQuestion();
-            }}
-          >
-            salvar
-          </button>
+          {saved ? (
+            <MdBackup size={32} color="#00f" />
+          ) : (
+            <button
+              id="save"
+              type="button"
+              onClick={() => {
+                saveQuestion();
+              }}
+            >
+              salvar
+            </button>
+          )}
         </div>
       </div>
       <div>

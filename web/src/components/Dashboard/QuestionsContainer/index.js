@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
@@ -10,11 +11,13 @@ import thisIsFine from '../../../assets/this_is_fine.jpg';
 function QuestionsContainer({
   noAnswers,
   questions,
+  setQuestions,
   page,
   setPage,
   hasMoreQuestions,
   setSelectedQuestion,
   setAnswers,
+  areMyErrors,
 }) {
   return (
     <Container>
@@ -24,7 +27,7 @@ function QuestionsContainer({
           <img src={thisIsFine} alt="dog in burning room" />
         </div>
       )}
-      {questions && questions.length > 0 && (
+      {!areMyErrors && questions && questions.length > 0 && (
         <div id="containerPagination">
           {page !== 1 && (
             <button
@@ -56,8 +59,11 @@ function QuestionsContainer({
           <Question
             key={question.question_id}
             question={question}
+            questions={questions}
+            setQuestions={setQuestions}
             setSelectedQuestion={setSelectedQuestion}
             setAnswers={setAnswers}
+            areMyErrors={areMyErrors}
           />
         ))}
     </Container>

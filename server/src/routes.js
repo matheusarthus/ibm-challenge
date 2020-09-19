@@ -93,6 +93,8 @@ routes.get('/', (req, res) => {
   });
 });
 
-routes.post('/save/:id', SaveQuestionsController.store);
+routes.get('/questions/:id', SaveQuestionsController.index);
+routes.post('/questions/:id', SaveQuestionsController.store);
+routes.delete('/questions/:id', SaveQuestionsController.delete);
 
 export default routes;

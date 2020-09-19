@@ -69,6 +69,8 @@ export const Container = styled.div`
 
     div#buttons {
       display: flex;
+      align-content: center;
+      align-items: center;
       flex-direction: column;
 
       button#back {

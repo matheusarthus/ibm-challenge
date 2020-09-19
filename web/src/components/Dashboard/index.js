@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import api from '../../services/api';
 
 import { Container, Header, Form, Logo } from './styles';
 
@@ -14,6 +15,7 @@ function Dashboard({ user }) {
   const [answers, setAnswers] = useState([]);
   const [hasMoreQuestions, setHasMoreQuestion] = useState(true);
   const [noAnswers, setNoAnsers] = useState(false);
+  const [areMyErrors, setAreMyErrors] = useState(false);
   const [page, setPage] = useState(1);
 
   const logOut = () => {
@@ -39,8 +41,11 @@ function Dashboard({ user }) {
           }
         );
 
+        console.log(response.data.items);
+
         setSelectedQuestion(null);
         setAnswers(null);
+        setAreMyErrors(false);
 
         setQuestions(response.data.items);
         setHasMoreQuestion(response.data.has_more);
@@ -60,6 +65,29 @@ function Dashboard({ user }) {
     searchQuestions();
   }, [page]);
 
+  async function getMyErrors() {
+    const id = user.facebookId || user.googleId || user.twitterId;
+
+    try {
+      const response = await api.get(`questions/${id}`, {
+        withCredentials: true,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Credentials': true,
+        },
+      });
+
+      setSelectedQuestion(null);
+      setAnswers(null);
+
+      setQuestions(response.data.questions);
+      setAreMyErrors(true);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <>
       <Header>
@@ -71,7 +99,7 @@ function Dashboard({ user }) {
             id="errors"
             type="button"
             onClick={() => {
-              console.log(questions);
+              getMyErrors();
             }}
           >
             my Errors
@@ -115,6 +143,7 @@ function Dashboard({ user }) {
             setSelectedQuestion={setSelectedQuestion}
             answers={answers}
             setAnswers={setAnswers}
+            areMyErrors={areMyErrors}
           />
         ) : (
           <QuestionsContainer
@@ -122,9 +151,11 @@ function Dashboard({ user }) {
             page={page}
             setPage={setPage}
             questions={questions}
+            setQuestions={setQuestions}
             hasMoreQuestions={hasMoreQuestions}
             setSelectedQuestion={setSelectedQuestion}
             setAnswers={setAnswers}
+            areMyErrors={areMyErrors}
           />
         )}
       </Container>

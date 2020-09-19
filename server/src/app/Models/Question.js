@@ -1,21 +1,20 @@
 import mongoose from 'mongoose';
-import AnswerSchema from './Schemas/Answer';
+
+import OwnerSchema from './Schemas/Owner';
 
 const QuestionSchema = new mongoose.Schema({
   user_id: String,
-  id: String,
+  is_answered: Boolean,
+  question_id: String,
   title: String,
-  link: String,
-  profile_image: String,
-  display_name: String,
-  reputation: Number,
   answer_count: Number,
   score: Number,
   view_count: Number,
-  creation_date: Date,
-  last_activity_date: Date,
+  creation_date: Number,
+  last_activity_date: Number,
   body: String,
-  answers: [AnswerSchema],
+  tags: [String],
+  owner: OwnerSchema,
 });
 
 export default mongoose.model('Question', QuestionSchema);
