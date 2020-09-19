@@ -1,26 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
 import axios from 'axios';
 
-import parse from 'html-react-parser';
+import { Container, Header, Form, Logo } from './styles';
 
-import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
-import { BsStarFill } from 'react-icons/bs';
-import { CgCloseO } from 'react-icons/cg';
-
-import {
-  Container,
-  Header,
-  Form,
-  Logo,
-  QuestionsContainer,
-  AnswersContainer,
-  Answer,
-} from './styles';
-
-import Question from './Question';
-
-import thisIsFine from '../../assets/this_is_fine.jpg';
+import QuestionsContainer from './QuestionsContainer';
+import AnswersContainer from './AnswersContainer';
 
 function Dashboard({ user }) {
   const [search, setSearch] = useState('');
@@ -125,129 +109,23 @@ function Dashboard({ user }) {
           </div>
         </Form>
 
-        {!selectedQuestion && (
-          <QuestionsContainer>
-            {noAnswers && (
-              <div id="noAnswers">
-                <strong>No help for this ERROR...</strong>
-                <img src={thisIsFine} alt="dog in burning room" />
-              </div>
-            )}
-            {questions.length > 0 && (
-              <div id="containerPagination">
-                {page !== 1 && (
-                  <button
-                    className="pagination"
-                    type="button"
-                    onClick={() => {
-                      setPage(page - 1);
-                    }}
-                  >
-                    <BiLeftArrow size={32} />
-                  </button>
-                )}
-                <span id="page">{page}</span>
-                {hasMoreQuestions && (
-                  <button
-                    className="pagination"
-                    type="button"
-                    onClick={() => {
-                      setPage(page + 1);
-                    }}
-                  >
-                    <BiRightArrow size={32} />
-                  </button>
-                )}
-              </div>
-            )}
-            {questions &&
-              questions.map((question) => (
-                <Question
-                  key={question.question_id}
-                  question={question}
-                  setSelectedQuestion={setSelectedQuestion}
-                  setAnswers={setAnswers}
-                />
-              ))}
-          </QuestionsContainer>
-        )}
-        {selectedQuestion && (
-          <AnswersContainer>
-            <div id="header">
-              <div id="titles">
-                <h4>{selectedQuestion.title}</h4>
-                <a href={selectedQuestion.link}>see on stackoverflow</a>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setSelectedQuestion(null);
-                  setAnswers([]);
-                }}
-              >
-                <CgCloseO color="#f00" size={42} />
-              </button>
-            </div>
-            <div>
-              <div id="metrics">
-                <strong>Respostas:</strong>
-                <span>{selectedQuestion.answer_count}</span>
-              </div>
-              <div id="metrics">
-                <strong>Votos:</strong>
-                <span>{selectedQuestion.score}</span>
-              </div>
-              <div id="metrics">
-                <strong>Visitas:</strong>
-                <span>{selectedQuestion.view_count}</span>
-              </div>
-            </div>
-            <div className="tags">
-              {selectedQuestion.tags &&
-                selectedQuestion.tags.map((tag) => (
-                  <div id="tag" key={tag}>
-                    <span>{tag}</span>
-                  </div>
-                ))}
-            </div>
-            <div className="dates">
-              <strong>Criação:</strong>
-              <span>
-                {format(
-                  new Date(selectedQuestion.creation_date * 1000),
-                  'dd/MM/yyyy - HH:mm:ss'
-                )}
-              </span>
-              <strong>Atualização:</strong>
-              <span>
-                {format(
-                  new Date(selectedQuestion.last_activity_date * 1000),
-                  'dd/MM/yyyy - HH:mm:ss'
-                )}
-              </span>
-            </div>
-            <div id="body">{parse(selectedQuestion.body)}</div>
-            <h4>Answers:</h4>
-            {answers.length > 0 ? (
-              answers.map((answer) => (
-                <Answer key={answer.answer_id} accepted={answer.is_accepted}>
-                  <div id="owner">
-                    <img src={answer.owner.profile_image} alt="profile" />
-                    <div>
-                      <strong>{answer.owner.display_name}</strong>
-                      <div id="reputation">
-                        <BsStarFill color="#ffbf00" />
-                        <span>{answer.owner.reputation}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="answerBody">{parse(answer.body)}</div>
-                </Answer>
-              ))
-            ) : (
-              <span id="noAnswers">no answers for this question...</span>
-            )}
-          </AnswersContainer>
+        {selectedQuestion ? (
+          <AnswersContainer
+            selectedQuestion={selectedQuestion}
+            setSelectedQuestion={setSelectedQuestion}
+            answers={answers}
+            setAnswers={setAnswers}
+          />
+        ) : (
+          <QuestionsContainer
+            noAnswers={noAnswers}
+            page={page}
+            setPage={setPage}
+            questions={questions}
+            hasMoreQuestions={hasMoreQuestions}
+            setSelectedQuestion={setSelectedQuestion}
+            setAnswers={setAnswers}
+          />
         )}
       </Container>
     </>
