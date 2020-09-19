@@ -260,10 +260,43 @@ export const Answer = styled.div`
   border-width: 3px;
   border-style: solid;
   align-self: center;
-  border-color: ${(props) => (props.hasAnswer ? '#004e00' : '#000')};
+  border-color: ${(props) => (props.accepted ? '#004e00' : '#000')};
+  background: ${(props) => props.accepted && '#ebffeb'};
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
+
+  div#owner {
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+    align-items: center;
+
+    img {
+      width: 42px;
+      height: 42px;
+      margin-right: 10px;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      align-items: center;
+    }
+
+    div#reputation {
+      display: flex;
+      align-content: center;
+      align-items: center;
+      flex-direction: row;
+
+      span {
+        margin-left: 5px;
+        font-size: 12px;
+      }
+    }
+  }
 
   div#answerBody {
     display: flex;

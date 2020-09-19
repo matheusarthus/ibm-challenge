@@ -5,6 +5,7 @@ import axios from 'axios';
 import parse from 'html-react-parser';
 
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
+import { BsStarFill } from 'react-icons/bs';
 
 import { searchMok } from '../../moks/search';
 import { answersMok } from '../../moks/answers';
@@ -250,9 +251,18 @@ function Dashboard({ user }) {
             <h4>Answers:</h4>
             {answersMok &&
               answersMok.map((answer) => (
-                <Answer key={answer.answer_id}>
+                <Answer key={answer.answer_id} accepted={answer.is_accepted}>
+                  <div id="owner">
+                    <img src={answer.owner.profile_image} alt="profile" />
+                    <div>
+                      <strong>{answer.owner.display_name}</strong>
+                      <div id="reputation">
+                        <BsStarFill color="#ffbf00" />
+                        <span>{answer.owner.reputation}</span>
+                      </div>
+                    </div>
+                  </div>
                   <div id="answerBody">{parse(answer.body)}</div>
-                  <div />
                 </Answer>
               ))}
           </AnswersContainer>
