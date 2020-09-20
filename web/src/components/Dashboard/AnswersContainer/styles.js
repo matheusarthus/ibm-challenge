@@ -229,6 +229,10 @@ export const Container = styled.div`
       white-space: pre-wrap;
       color: #00f;
       background-color: #f1f1f1;
+
+      @media (max-width: 500px) {
+        font-size: 80%;
+      }
     }
   }
 `;
