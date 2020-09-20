@@ -22,7 +22,7 @@ function Dashboard({ user }) {
     window.open('http://localhost:3333/auth/logout', '_self');
   };
 
-  const searchQuestions = async () => {
+  const searchQuestions = async (page) => {
     if (search.length > 0) {
       try {
         const response = await axios.get(
@@ -41,8 +41,6 @@ function Dashboard({ user }) {
           }
         );
 
-        console.log(response.data.items);
-
         setSelectedQuestion(null);
         setAnswers(null);
         setAreMyErrors(false);
@@ -60,10 +58,6 @@ function Dashboard({ user }) {
       }
     }
   };
-
-  useEffect(() => {
-    searchQuestions();
-  }, [page]);
 
   async function getMyErrors() {
     const id = user.facebookId || user.googleId || user.twitterId;
@@ -128,7 +122,7 @@ function Dashboard({ user }) {
               type="button"
               onClick={() => {
                 setPage(1);
-                searchQuestions();
+                searchQuestions(1);
               }}
             >
               GO!
@@ -148,6 +142,7 @@ function Dashboard({ user }) {
         ) : (
           <QuestionsContainer
             noAnswers={noAnswers}
+            searchQuestions={searchQuestions}
             page={page}
             setPage={setPage}
             questions={questions}

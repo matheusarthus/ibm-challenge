@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import { Container } from './styles';
@@ -12,12 +12,13 @@ function QuestionsContainer({
   noAnswers,
   questions,
   setQuestions,
-  page,
-  setPage,
+  searchQuestions,
   hasMoreQuestions,
   setSelectedQuestion,
   setAnswers,
   areMyErrors,
+  page,
+  setPage,
 }) {
   return (
     <Container>
@@ -35,6 +36,7 @@ function QuestionsContainer({
               type="button"
               onClick={() => {
                 setPage(page - 1);
+                searchQuestions(page - 1);
               }}
             >
               <BiLeftArrow size={32} />
@@ -47,6 +49,7 @@ function QuestionsContainer({
               type="button"
               onClick={() => {
                 setPage(page + 1);
+                searchQuestions(page + 1);
               }}
             >
               <BiRightArrow size={32} />
