@@ -43,7 +43,7 @@ Um exemplo de resposta:
 
 ## Back-end
 
-Para executar o back-end é preciso acessar, via terminal, a pasta `server` e executar o comando `yarn dev`
+Para executar o back-end é preciso acessar, via terminal, a pasta `server` e executar o comando `yarn dev`.
 
 
 ## Web
