@@ -23,6 +23,12 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 **WEB:**
 
+Tela de login da aplicação. É possível fazer a autenticação por meio do Google, Twitter e Facebook.
+
+<p align="center">
+  <img alt="login_screen" title="login_screen" src=".github/tela_login.png" width="100%" />
+</p>
+
 Tela inicial, onde o usuário poderá consultar os seus erros.
 
 <p align="center">
@@ -34,13 +40,6 @@ Um exemplo de resposta:
 <p align="center">
   <img alt="main_screen" title="main_screen" src=".github/tela_resposta.png" width="100%" />
 </p>
-
-Tela de login da aplicação. É possível fazer a autenticação por meio do Google, Twitter e Facebook.
-
-<p align="center">
-  <img alt="login_screen" title="login_screen" src=".github/tela_login.png" width="100%" />
-</p>
-
 
 ## Back-end
 
