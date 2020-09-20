@@ -10,7 +10,6 @@ import SaveQuestionsController from './app/controllers/SaveQuestionsController';
 const routes = new Router();
 
 routes.get('/auth/login/success', (req, res) => {
-  console.log('success');
   if (req.user) {
     res.json({
       success: true,
